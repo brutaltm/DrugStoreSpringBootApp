@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="shared/layout"
+      th:with="pageName='register', pageTitle='Rejestracja'">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div layout:fragment="custom-content">
+    <form th:method="POST" th:object="${user}" th:action="@{/saveUser}">
+        <div>
+            <input type="text" th:field="*{username}" placeholder="Username" id="username"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('username')}" th:each="err : ${#fields.errors('username')}" th:text="${err}"></small>
+        </div>
+        <div>
+            <input type="email" th:field="*{email}" placeholder="Email" id="email"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('email')}" th:each="err : ${#fields.errors('email')}" th:text="${err}"></small>
+        </div>
+        <div>
+            <input type="password" th:field="*{password}" placeholder="Password" id="password"/>
+        </div>
+        <div>
+            <input type="password" th:field="*{passwordConfirm}" placeholder="Confirm Password" id="passwordConfirm"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('passwordConfirm')}" th:each="err : ${#fields.errors('passwordConfirm')}" th:text="${err}"></small>
+        </div>
+        <input type="submit" value="Zarejestruj"/>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="shared/layout"
+      th:with="pageName='drugList', pageTitle=#{label.menu.druglist}">
+<body>
+<div layout:fragment="custom-content">
+
+    <form th:action="@{/drugs/list}" method="post" th:object="${drugFilter}">
+        <div class="form-group row">
+            <div class="col-sm-9">
+                <select class="form-control" th:field="*{queryMode}">
+                    <option th:each="typ:${typyZapytan}" th:value="${typ}" th:text="${typ}"/>
+                </select>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" name="phrase" th:field="*{phrase}" class="form-control" id="name" th:placeholder="#{label.filter.enterPhrase}">
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-success">[[#{label.filter.search}]]</button>
+                <button class="btn btn-warning" name="clear">[[#{label.filter.clear}]]</button>
+            </div>
+        </div>
+        <div sec:authorize="isAuthenticated()" class="form-group row">
+            <div class="col-sm-2">
+                <input type="date" name="phrase" th:field="*{dateFrom}" class="form-control" id="dateFrom" placeholder="Data od">
+            </div>
+            <div class="col-sm-2">
+                <input type="date" name="phrase" th:field="*{dateTo}" class="form-control" id="dateTo" placeholder="Data do">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" name="phrase" th:field="*{minPrice}" class="form-control" id="minPrice" th:placeholder="#{label.filter.minPrice}">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" name="phrase" th:field="*{maxPrice}" class="form-control" id="maxPrice" th:placeholder="#{label.filter.maxPrice}">
+            </div>
+            <div class="col-sm-5 form-group row">
+                <div class="col-sm-4">
+                    <label class="col-form-label">[[#{label.lek.form}]]: </label>
+                    <div th:each="forma:${formyLeku}" class="custom-control custom-checkbox">
+                        <input type="checkbox" th:field="*{forms}" th:value="${forma.id}" class="custom-control-input" th:id="${forma.name}" >
+                        <label class="custom-control-label" th:for="${forma.name}" th:text="${forma.name}"></label>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <label class="col-sm-2 col-form-label">[[#{label.lek.productType}]]: </label>
+                    <div th:each="typ:${typyProduktow}" class="custom-control custom-checkbox">
+                        <input type="checkbox" th:field="*{productTypes}" th:value="${typ.id}" class="custom-control-input" th:id="${typ}" >
+                        <label class="custom-control-label" th:for="${typ}" th:text="${typ.name}"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <div class="table-responsive" th:with="mainUrl='list'">
+    <span style="color: darkgreen; font-weight: bold; float: left;" th:text="'Dostępnych ' + ${page.totalElements} + ' wyników.' "></span>
+<table class="table table-bordered" style="background-color: #8fd6ff" th:unless="${#lists.isEmpty(page)}">
+    <thead class="thead-dark">
+    <tr>
+        <th>LP</th>
+        <th th:replace="~{shared/fragments :: tableHeader(${mainUrl}, ${page}, 'name', #{label.lek.name})}">
+        <th th:replace="~{shared/fragments :: tableHeader(${mainUrl}, ${page}, 'manufacturer', #{label.lek.manufacturer})}">
+        <th th:replace="~{shared/fragments :: tableHeader(${mainUrl}, ${page}, 'releaseDate', #{label.lek.releaseDate})}">
+        <th th:replace="~{shared/fragments :: tableHeader(${mainUrl}, ${page}, 'price', #{label.lek.price})}">
+        <th th:replace="~{shared/fragments :: tableHeader(${mainUrl}, ${page}, 'promoprice', #{label.lek.promoprice})}">
+        <th th:replace="~{shared/fragments :: tableHeader(${mainUrl}, ${page}, 'productType', #{label.lek.productType})}">
+        <th> [[#{label.lek.photo}]] </th>
+        <th th:replace="~{shared/fragments :: tableHeader(${mainUrl}, ${page}, 'rating', #{label.lek.rating})}"></th>
+        <th sec:authorize="isAuthenticated()">[[#{label.lek.options}]]</th>
+    </tr>
+    </thead>
+    <tr th:with="liczba=${page.number*page.size}" th:each="drug:${page.content}" th:object="${drug}">
+        <td th:text="${liczba+drugStat.index+1}"></td>
+        <td th:text="*{name}"></td>
+        <td th:text="*{manufacturer}"></td>
+        <td th:text="*{#temporals.format(releaseDate, 'dd.MM.yyyy')}"></td>
+        <td th:text="*{#numbers.formatDecimal(price, 2,2,'COMMA')}"></td>
+        <td th:if="*{discount == True}" th:text="*{#numbers.formatDecimal(promoprice, 2,2,'COMMA')}"></td>
+        <td th:if="*{discount == False}" th:text="*{#numbers.formatDecimal(price, 2,2,'COMMA')}"></td>
+        <td th:text="*{productType.name}"></td>
+        <td>
+            <img th:if="${drug.photo != null}" th:src="'/zdjecia/drugs/' + *{id} + '/min/' + *{photo.fileName}">
+            <img th:unless="${drug.photo != null}" th:src="'/asd/Placeholder.png'" width='50' height='50'/>
+        </td>
+        <td th:with="rating=${drug.getRating()}">
+            <img th:each="i : ${#numbers.sequence( 1, 5, 1)}" th:src="${( i <= rating ) ? '/asd/starY.png' : (( rating - i >= -0.5 ) ? '/asd/starH.png' : '/asd/starB.png')}" width='30' height='30' class="img-fluid"/>
+        </td>
+        <td sec:authorize="isAuthenticated()">
+            <a sec:authorize="hasRole('USER')" th:href="@{details(id=*{id})}"><img th:src="@{../information.ico}" width='50' height='50' class="img-fluid"></a>
+            <a sec:authorize="hasRole('ADMIN')" class="btn btn-success" th:href="@{edit(id=*{id})}">[[#{label.lek.edit}]]</a>
+            <a sec:authorize="hasRole('ADMIN')" class="btn btn-danger" th:href="@{delete/{did}(did=*{id})}">[[#{label.lek.delete}]]</a>
+            <a sec:authorize="hasRole('USER')" th:href="@{../cart/add/{did}(did=*{id})}"><img th:src="@{../cart.png}" width='50' height='50' class="img-fluid"></a>
+        </td>
+
+    </tr>
+</table>
+
+<nav th:replace="~{shared/fragments :: tableNav(${mainUrl}, ${page})}">
+
+
+</div>
+<span th:if="${#lists.isEmpty(page)}">Brak leków</span>
+<a sec:authorize="hasRole('ADMIN')" class="btn btn-success" th:href="@{add}">[[#{label.lek.addNew}]]</a>
+<a class="btn btn-secondary" href="/">[[#{label.menu.return}]]</a>
+</div>
+</body>
+</html>

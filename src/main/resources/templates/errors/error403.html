@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+
+      layout:decorate="shared/layout"
+      th:with="pageName='error403', pageTitle='403 - Odmowa dostępu'">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona Główna</title>
+</head>
+<body>
+<div layout:fragment="custom-content">
+    <div>
+        <div>
+            <div>Witaj <b><span sec:authentication="principal.username"/></b>!<br/>
+                Nie masz odpowiednich praw dostępu do żądanej strony.
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

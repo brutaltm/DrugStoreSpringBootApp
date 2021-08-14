@@ -1,0 +1,28 @@
+H1 {
+    color: coral;
+}
+
+.table th.sorting_asc {
+    background-image: url("img/sort_asc.png");
+}
+
+.table th.sorting_desc {
+    background-image: url("img/sort_desc.png");
+}
+
+.table th.sorting_both {
+    background-image: url("img/sort_both.png");
+}
+
+.table th{
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+.ROLE_ADMIN {
+    color: ORANGE;
+}
+
+.ROLE_USER {
+    color: GREEN;
+}

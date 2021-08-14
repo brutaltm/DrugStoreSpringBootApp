@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="shared/layout"
+      th:with="pageName='drugForm', pageTitle=#{label.menu.editadd}">
+<body>
+<div layout:fragment="custom-content">
+<form th:method="POST" th:object="${lek}" th:action="@{save(id=*{id})}" enctype="multipart/form-data">
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label" th:text="#{label.lek.name}"></label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{name}" class="form-control" th:classappend="${#fields.hasErrors('name')?'is-invalid': (formValidated?'is-valid':'')}" id="name"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('name')}" th:each="err : ${#fields.errors('name')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="manufacturer" class="col-sm-2 col-form-label" th:text="#{label.lek.manufacturer}"></label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{manufacturer}" class="form-control" th:classappend="${#fields.hasErrors('manufacturer')?'is-invalid': (formValidated?'is-valid':'')}" id="manufacturer"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('manufacturer')}" th:each="err : ${#fields.errors('manufacturer')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="releaseDate" class="col-sm-2 col-form-label" th:text="#{label.lek.releaseDate}"></label>
+        <div class="col-sm-10">
+            <input type="date" th:field="*{releaseDate}" class="form-control" th:classappend="${#fields.hasErrors('releaseDate')?'is-invalid': (formValidated?'is-valid':'')}" id="releaseDate"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('releaseDate')}" th:each="err : ${#fields.errors('releaseDate')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="price" class="col-sm-2 col-form-label" th:text="#{label.lek.price}"></label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{price}" class="form-control" th:classappend="${#fields.hasErrors('price')?'is-invalid': (formValidated?'is-valid':'')}" id="price"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('price')}" th:each="err : ${#fields.errors('price')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="promoprice" class="col-sm-2 col-form-label" th:text="#{label.lek.promoprice}"></label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{promoprice}" class="form-control" th:classappend="${#fields.hasErrors('promoprice')?'is-invalid': (formValidated?'is-valid':'')}" id="promoprice"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('promoprice')}" th:each="err : ${#fields.errors('promoprice')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="discount" class="col-sm-2 col-form-label" th:text="#{label.lek.discount}"></label>
+        <div class="col-sm-10">
+            <input type="checkbox" th:field="*{discount}" class="form-control" th:classappend="${#fields.hasErrors('discount')?'is-invalid': (formValidated?'is-valid':'')}" id="discount"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('discount')}" th:each="err : ${#fields.errors('discount')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">[[#{label.lek.form}]]</label>
+        <div class="col-sm-10">
+            <div th:each="forma:${formyLeku}" class="custom-control custom-checkbox">
+                <input type="checkbox" th:field="*{forms}" th:value="${forma.id}" class="custom-control-input" th:id="${forma.name}" >
+                <label class="custom-control-label" th:for="${forma.name}" th:text="${forma.name}"></label>
+            </div>
+            <small style="color: red;" th:if="${#fields.hasErrors('forms')}" th:each="err : ${#fields.errors('forms')}" th:text="${err}"/>
+        </div>
+    </div>
+    <input type="hidden" th:field="*{rating}"/>
+    <div class="form-group row">
+        <label for="productType.id" class="col-sm-2 col-form-label" th:text="#{label.lek.productType}"></label>
+        <div class="col-sm-10">
+            <select th:field="*{productType.id}" class="form-control" th:classappend="${#fields.hasErrors('productType.id')?'is-invalid': (formValidated?'is-valid':'')}" id="productType.id">
+                <option value="-1">[[#{label.lek.selectType}]]</option>
+                <option th:each="typ:${typyProduktow}" th:value='${typ.id}'>[[${typ.name}]]</option>
+            </select>
+                <small style="color: red;" th:if="${#fields.hasErrors('productType.id')}" th:each="err : ${#fields.errors('productType.id')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">[[#{label.lek.addPhoto}]]</label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input type="file" name="multipartFile" class="custom-file input" id="customFileLangHTML" accept=".gif,.png,.jpeg,.jpg">
+                <label class="custom-file-label" for="customFileLangHTML" data-browse="Wybierz..."></label>
+                <img th:if="${lek.photo != null}" th:src="'/zdjecia/drugs/' + *{id} + '/medium/' + *{photo.fileName}">
+            </div>
+            <small style="color: red;" th:if="${#fields.hasErrors('photo')}" th:each="err : ${#fields.errors('photo')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-primary" th:value="#{label.menu.confirm}">
+</form>
+</div>
+</body>
+</html>

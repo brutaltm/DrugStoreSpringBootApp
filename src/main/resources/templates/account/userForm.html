@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="shared/layout"
+      th:with="pageName='userForm', pageTitle=#{label.account.personalData}">
+<body>
+<div layout:fragment="custom-content">
+<form th:method="POST" th:object="${user}" th:action="@{save}" >
+    <div class="form-group row">
+        <label for="firstName" class="col-sm-2 col-form-label" th:text="#{label.user.firstName}"></label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{firstName}" class="form-control" th:classappend="${#fields.hasErrors('firstName')?'is-invalid': ''}" id="firstName"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('firstName')}" th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="surName" class="col-sm-2 col-form-label" th:text="#{label.user.surName}"></label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{surName}" class="form-control" th:classappend="${#fields.hasErrors('surName')?'is-invalid': ''}" id="surName"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('surName')}" th:each="err : ${#fields.errors('surName')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="address" class="col-sm-2 col-form-label" th:text="#{label.user.address}"></label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{address}" class="form-control" th:classappend="${#fields.hasErrors('address')?'is-invalid': ''}" id="address"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('address')}" th:each="err : ${#fields.errors('address')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="zipCode" class="col-sm-2 col-form-label" th:text="#{label.user.zipCode}"></label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{zipCode}" class="form-control" th:classappend="${#fields.hasErrors('zipCode')?'is-invalid': ''}" id="zipCode"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('zipCode')}" th:each="err : ${#fields.errors('zipCode')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="phone" class="col-sm-2 col-form-label" th:text="#{label.user.phone}"></label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{phone}" class="form-control" th:classappend="${#fields.hasErrors('phone')?'is-invalid':''}" id="phone"/>
+            <small style="color: red;" th:if="${#fields.hasErrors('phone')}" th:each="err : ${#fields.errors('phone')}" th:text="${err}"></small>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Wyślij">
+</form>
+</div>
+</body>
+</html>

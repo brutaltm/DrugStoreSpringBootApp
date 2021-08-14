@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="shared/layout"
+      th:with="pageName='home', pageTitle=#{label.menu.homePage}">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona Główna</title>
+</head>
+<body>
+
+<div layout:fragment="custom-content">
+    <a href="drugs/list">[[#{label.menu.druglist}]]</a>
+</div>
+</body>
+</html>

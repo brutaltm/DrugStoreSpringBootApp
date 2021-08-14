@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="shared/layout"
+      th:with="pageName='orderList', pageTitle=#{label.account.orderlist}">
+<body>
+<div layout:fragment="custom-content">
+
+
+    <div class="table-responsive" th:with="mainUrl='orders'">
+            <div style="width: 100%" th:each="order:${page.content}" th:object="${order}">
+                <table class="table table-bordered" style="background-color: #8fd6ff" th:unless="${#lists.isEmpty(page)}">
+                <thead class="thead-dark">
+                    <tr>
+                        <th th:text="${'ZAM' + order.id + 'APT'}"></th>
+                        <th th:text="${order.user.username}"></th>
+                        <th th:text="${#temporals.format(order.orderedAt, 'dd.MM.yyyy HH:mm')}"></th>
+                        <th colspan="2" th:text="${order.status}"></th>
+                    </tr>
+                </thead>
+                <thead class="thead-dark">
+                    <tr>
+                        <th th:text="#{label.order.id}"></th>
+                        <th th:text="#{label.lek.name}"></th>
+                        <th th:text="#{label.lek.price}"></th>
+                        <th th:text="#{label.order.amount}"></th>
+                        <th style="width: 20%" th:text="#{label.order.total}"></th>
+                    </tr>
+                </thead>
+                <tr  th:each="orderedProduct, stats :${order.zamowione_produkty}">
+                    <td th:text="${orderedProduct.drug.id}"></td>
+                    <td> <a th:text="${orderedProduct.drug.name}" th:href="@{../drugs/details(id=*{id})}"/></td>
+                    <td th:text="${#numbers.formatDecimal(orderedProduct.drug.price, 1, 'DEFAULT', 2, 'DEFAULT')} + ' PLN'"></td>
+                    <td th:text="'x ' + ${orderedProduct.amount}"></td>
+                    <td th:with="fullPrice=${orderedProduct.drug.price * orderedProduct.amount}" th:text="${#numbers.formatDecimal(fullPrice, 0, 'DEFAULT', 2, 'DEFAULT')} + ' PLN'"></td>
+                </tr>
+                <thead class="thead-dark">
+                <tr>
+                    <th></th><th></th><th></th>
+                    <th>
+                        <a th:if="${!order.isOplacony()}" class="btn btn-danger" th:href="@{orders/cancel(id=*{id})}">[[#{label.menu.cancel}]]</a>
+                        <a th:if="${order.isOplacony()}" class="btn btn-info" th:href="'/zdjecia/' + *{user.id} + '/Invoices/FV' + ${#temporals.format(order.orderedAt, 'YYMMdd')} + '-' + *{id} + '.pdf'">[[#{label.order.downloadInvoice}]]</a>
+                    </th>
+                    <th> <span th:text="${#numbers.formatDecimal(order.totalPrice, 1, 'DEFAULT', 2, 'DEFAULT')} + ' PLN'"/> <a class="btn btn-warning" style="float: right;" th:if="${!order.isOplacony()}" th:href="@{orders/pay(id=*{id})}">[[#{label.order.pay}]]</a></th>
+                </tr>
+                </thead>
+                </table>
+            </div>
+        <nav th:replace="~{shared/fragments :: tableNav(${mainUrl}, ${page})}"/>
+    </div>
+
+
+
+
+</div>
+<span th:if="${#lists.isEmpty(page)}">Brak zamówień</span>
+<a sec:authorize="hasRole('ADMIN')" class="btn btn-success" th:href="@{add}">[[#{label.lek.addNew}]]</a>
+<a class="btn btn-secondary" href="/">[[#{label.menu.return}]]</a>
+</div>
+</body>
+</html>

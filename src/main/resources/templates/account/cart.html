@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="shared/layout"
+      th:with="pageName='cart', pageTitle=#{label.menu.cart}">
+    <head><script>
+        size = [[${#lists.size(order.zamowione_produkty)}]];
+        sum=0;
+        function zlicz() {
+            $('.sum_item').each(function(){
+                var item_val=parseFloat($(this).text());
+                if(isNaN(item_val)){
+                    item_val=0;
+                }
+                console.log("ASDASDAD");
+                sum+=item_val;
+                $('#total').text(sum.toFixed(2));
+            });
+        }
+        function zmiana(index, cena, ilosc) {
+            var span = document.getElementById("span" + index);
+            var total = document.getElementById("total");
+            span.innerHTML = (ilosc * cena).toFixed(2);
+            sum = 0;
+            $('.sum_item').each(function(){
+                var item_val=parseFloat($(this).text());
+                if(isNaN(item_val)){
+                    item_val=0;
+                }
+                sum+=item_val;
+                $('#total').text(sum.toFixed(2));
+            });
+        }
+    </script></head>
+<body onload="zlicz()">
+
+<div layout:fragment="custom-content">
+    <form th:unless="${#lists.isEmpty(order.zamowione_produkty)}" th:method="POST" th:object="${order}" th:action="@{cart/save(id=*{id})}">
+        <div class="table-responsive" th:with="mainUrl='cart'">
+            <table th:object="${order}" class="table table-bordered" style="background-color: #8fd6ff">
+                <thead class="thead-dark">
+                    <tr>
+                        <input type="hidden" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{zamowione_produkty}"/>
+                        <input type="hidden" th:field="*{user.id}"/>
+                        <th colspan="6" th:text="#{label.menu.cart} + ', ' + #{label.cart.edited} + ' ' + ${#temporals.format(order.orderedAt, 'dd-MM-yyyy')}" style="text-align: center;"></th>
+                    </tr>
+                </thead>
+                <thead class="thead-dark">
+                    <tr>
+                        <th th:text="#{label.order.id}">
+                        <th th:text="#{label.lek.name}"/>
+                        <th th:text="#{label.lek.price}"/>
+                        <th th:text="#{label.order.amount}"/>
+                        <th th:text="#{label.order.total}"/>
+                        <th th:text="#{label.lek.options}"/>
+                    </tr>
+                </thead>
+                <tr th:each="orderedProduct, stats :${order.zamowione_produkty}">
+                    <td th:text="${orderedProduct.drug.id}"></td>
+                    <td><a th:text="${orderedProduct.drug.name}" th:href="@{../drugs/details(id=${orderedProduct.drug.id})}" /></td>
+                    <td th:id="'price' + ${stats.index}" th:text="${#numbers.formatDecimal(orderedProduct.drug.price, 1, 'DEFAULT', 2, 'DEFAULT')} + ' PLN'"></td>
+                    <td><input th:id="'in' + ${stats.index}" type="number" min=1 th:field="*{zamowione_produkty[__${stats.index}__].amount}" th:onchange="'zmiana(' + ${stats.index} + ', ' + ${orderedProduct.drug.price} + ', ' + this.value + ');'"/></td>
+                    <td><span class="sum_item" th:id="'span' + ${stats.index}" th:text="${#numbers.formatDecimal(orderedProduct.drug.price * orderedProduct.amount, 1, 'DEFAULT', 2, 'DEFAULT')}"></span> PLN</td>
+                    <td><a class="btn btn-danger" th:href="@{delete/{id}(id=${orderedProduct.id})}" > [[#{label.lek.delete}]] </a></td>
+                </tr>
+                <tr>
+                    <td></td><td></td><td></td><td></td><td> <span id="total" th:text="${#numbers.formatDecimal(order.totalPrice, 1, 'DEFAULT', 2, 'DEFAULT')}"/><span> PLN</span></td><td></td>
+                </tr>
+            </table>
+            <input type="submit" class="btn btn-primary" th:value="#{label.menu.confirm}" style="float: right;"/>
+        </div>
+    </form>
+    <H2 th:if="${#lists.isEmpty(order.zamowione_produkty)}" th:text="#{label.cart.empty}"/>
+</div>
+</body>
+</html>

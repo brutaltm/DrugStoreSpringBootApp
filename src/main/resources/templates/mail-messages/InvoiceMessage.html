@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+</head>
+<body>
+<div>
+    <H1 th:text="${header}"></H1>
+    <div th:text="${title}"></div>
+    <div th:text="${description}"></div>
+    <table>
+        <thead>
+        <tr>
+            <th class="service">ID</th>
+            <th class="service">PRODUKT</th>
+            <th class="desc">OPIS</th>
+            <th>CENA BRUTTO</th>
+            <th>ILOSC</th>
+            <th>W SUMIE</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderedProduct, stats :${order.zamowione_produkty}">
+            <td class="service" th:text="${orderedProduct.drug.id}"></td>
+            <td class="service" th:text="${orderedProduct.drug.name}"></td>
+            <td class="desc"></td>
+            <td class="unit" th:text="${#numbers.formatDecimal(orderedProduct.drug.price, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+            <td class="qty" th:text="${orderedProduct.amount}"></td>
+            <td class="total" th:text="${#numbers.formatDecimal(orderedProduct.drug.price * orderedProduct.amount, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+        <tr>
+            <td colspan="5">NETTO</td>
+            <td class="total" th:text="${#numbers.formatDecimal(order.totalPrice/1.23, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+        <tr>
+            <td colspan="5">PODATEK 23%</td>
+            <td class="total" th:text="${#numbers.formatDecimal(order.totalPrice/1.23 * 0.23, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+        <tr>
+            <td colspan="5" class="grand total">BRUTTO</td>
+            <td class="grand total" th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

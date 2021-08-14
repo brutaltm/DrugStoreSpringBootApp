@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Example 1</title>
+    <style>
+      .clearfix:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      a {
+        color: #5D6975;
+        text-decoration: underline;
+      }
+
+      body {
+        position: relative;
+        width: 18cm;
+        height: 25cm;
+        margin: 0 auto;
+        color: #001028;
+        background: #FFFFFF;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        font-family: Arial;
+      }
+
+      header {
+        padding: 10px 0;
+        margin-bottom: 30px;
+      }
+
+      #logo {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      #logo img {
+        width: 90px;
+      }
+
+      h1 {
+        border-top: 1px solid  #5D6975;
+        border-bottom: 1px solid  #5D6975;
+        color: #5D6975;
+        font-size: 2.4em;
+        line-height: 1.4em;
+        font-weight: normal;
+        text-align: center;
+        margin: 0 0 20px 0;
+        background:  url(data:image/gif;base64,[[${background}]]);
+      }
+
+      #project {
+        float: left;
+      }
+
+      #project span {
+        color: #5D6975;
+        text-align: right;
+        width: 52px;
+        margin-right: 10px;
+        display: inline-block;
+        font-size: 0.8em;
+      }
+
+      #company {
+        float: right;
+        text-align: right;
+      }
+
+      #project div,
+      #company div {
+        white-space: nowrap;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin-bottom: 20px;
+      }
+
+      table tr:nth-child(2n-1) td {
+        background: #F5F5F5;
+      }
+
+      table th,
+      table td {
+        text-align: center;
+      }
+
+      table th {
+        padding: 5px 20px;
+        color: #5D6975;
+        border-bottom: 1px solid #C1CED9;
+        white-space: nowrap;
+        font-weight: normal;
+      }
+
+      table .service,
+      table .desc {
+        text-align: left;
+      }
+
+      table td {
+        padding: 20px;
+        text-align: right;
+      }
+
+      table td.service,
+      table td.desc {
+        vertical-align: top;
+      }
+
+      table td.unit,
+      table td.qty,
+      table td.total {
+        font-size: 1.2em;
+      }
+
+      table td.grand {
+        border-top: 1px solid #5D6975;;
+      }
+
+      #notices .notice {
+        color: #5D6975;
+        font-size: 1.2em;
+      }
+
+      footer {
+        color: #5D6975;
+        width: 100%;
+        height: 30px;
+        position: absolute;
+        bottom: 0;
+        border-top: 1px solid #C1CED9;
+        padding: 8px 0;
+        text-align: center;
+      }
+
+      .container {
+        width: calc(80% / 2);
+        height: 50px;
+        padding: 0;
+        margin: 0;
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="clearfix">
+      <div id="logo">
+        <img th:src="${'data:image/png;base64,' + logo}" />
+      </div>
+      <h1 th:text="${'Faktura FV' + #temporals.format(order.orderedAt, 'YYMMdd') + '-' + order.getId()}"></h1>
+      <div id="company" class="clearfix">
+        <div>Apteka</div>
+        <div>ul. Apteczna 10,<br /> 07-989 Sosnowiec, PL</div>
+        <div>666777888</div>
+        <div><a href="mailto:apteka@apteka.com">apteka@apteka.com</a></div>
+      </div>
+      <div id="project">
+        <div><span>KLIENT</span>[[${order.user.username}]]</div>
+        <div><span>DANE</span> [[${order.user.firstName}]] [[${order.user.surName}]]</div>
+        <div><span>EMAIL</span> <a th:href="'mailto' + ${order.user.email}" th:text="${order.user.email}"></a></div>
+        <div><span>ADRES</span> [[${order.user.address}]]</div>
+        <div><span>KOD POCZT.</span> [[${order.user.zipCode}]]</div>
+        <div><span>DATA</span> [[${#temporals.format(order.orderedAt, 'dd-MM-yyyy')}]]</div>
+      </div>
+    </header>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th class="service">ID</th>
+            <th class="service">PRODUKT</th>
+            <th class="desc">OPIS</th>
+            <th>CENA BRUTTO</th>
+            <th>ILOSC</th>
+            <th>W SUMIE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="orderedProduct, stats :${order.zamowione_produkty}">
+            <td class="service" th:text="${orderedProduct.drug.id}"></td>
+            <td class="service" th:text="${orderedProduct.drug.name}"></td>
+            <td class="desc"></td>
+            <td class="unit" th:text="${#numbers.formatDecimal(orderedProduct.drug.price, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+            <td class="qty" th:text="${orderedProduct.amount}"></td>
+            <td class="total" th:text="${#numbers.formatDecimal(orderedProduct.drug.price * orderedProduct.amount, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+          </tr>
+          <tr>
+            <td colspan="5">NETTO</td>
+            <td class="total" th:text="${#numbers.formatDecimal(order.totalPrice/1.23, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+          </tr>
+          <tr>
+            <td colspan="5">PODATEK 23%</td>
+            <td class="total" th:text="${#numbers.formatDecimal(order.totalPrice/1.23 * 0.23, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+          </tr>
+          <tr>
+            <td colspan="5" class="grand total">BRUTTO</td>
+            <td class="grand total" th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'DEFAULT', 2, 'DEFAULT')}"></td>
+          </tr>
+        </tbody>
+      </table>
+      <br/>
+      <div class="minhold">
+        <div class="notice container"><span>Kupujacy:</span><br/><br/><span>..................................................</span></div>
+        <div class="notice container" style="float: right;"><span style="float: right;">Sprzedajacy:</span><br/><br/><span>..................................................</span></div>
+      </div>
+    </main>
+  </body>
+</html>

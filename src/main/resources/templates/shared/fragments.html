@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:fragment="header-css">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/platformy.css}"/>
+    <title>[[${pageTitle}]]</title>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.slim.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/1.16.0/popper.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.5.3/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+    <div th:fragment="moj_fragment">
+        Treść fragmentu
+    </div>
+    <div th:fragment="menu(pageName)">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/"><img th:src="@{../pharmacy-512.webp}" width='50' height='50' class="img-fluid"> [[#{label.menu.companyName}]] </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item" th:classappend="${pageName eq 'home'}?'active'">
+                        <a class="nav-link" th:href="@{/}">[[#{label.menu.homePage}]]</a>
+                    </li>
+                    <li class="nav-item" th:classappend="${pageName eq 'drugList'}?'active'">
+                        <a class="nav-link" th:href="@{../drugs/list}">[[#{label.menu.druglist}]]</a>
+                    </li>
+                    <li sec:authorize="hasRole('ADMIN')" class="nav-item" th:classappend="${pageName eq 'drugForm'}?'active'">
+                        <a class="nav-link" th:href="@{../drugs/add}">[[#{label.menu.new}]]</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav my-2 my-lg-0">
+                    <li sec:authorize="isAnonymous()" class="nav-item" th:classappend="${pageName eq 'register'}?'active'">
+                        <a class="nav-link" th:href="@{/register}">[[#{label.menu.register}]]</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="xxx" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            [[#{label.menu.language}]]
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="xxx" th:with="currentUrl=(${#httpServletRequest.requestURI + '?' + #strings.defaultString(#httpServletRequest.queryString, '')})">
+                            <a class="dropdown-item" th:href="@{${currentUrl.toString().replaceAll('&lang=[a-zA-Z]{2}','')}(lang='pl')}">Polski</a>
+                            <a class="dropdown-item" th:href="@{${currentUrl.toString().replaceAll('&lang=[a-zA-Z]{2}','')}(lang='en')}">English</a>
+                        </div>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item" th:classappend="${pageName eq 'loginForm'}?'active'">
+                        <a class="nav-link" th:href="@{../cart}">[[#{label.menu.cart}]]</a>
+                    </li>
+                    <li sec:authorize="isAnonymous()" class="nav-item" th:classappend="${pageName eq 'loginForm'}?'active'">
+                        <a class="nav-link" th:href="@{../login}">[[#{label.menu.login}]]</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item nav-link active">[[#{label.menu.welcome}]] <span sec:authentication="principal.username" th:classappend="${#authentication.getAuthorities()[0]}"/>!</li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="konto" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            [[#{label.menu.account}]]
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="konto">
+                            <a class="dropdown-item" th:href="@{../account/data}">[[#{label.menu.yourdata}]]</a>
+                            <a class="dropdown-item" th:href="@{../account/orders}">[[#{label.menu.orders}]]</a>
+                        </div>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item" th:classappend="${pageName eq 'logout'}?'active'">
+                        <form th:action="@{/logout}" id="logout" th:method="post">
+                            <button type="submit" class="btn btn-warning">[[#{label.menu.logout}]]</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <th th:fragment="tableHeader(mainUrl, page, propertyName, label)" th:classappend="${page.sort.getOrderFor(propertyName) eq null ?'sorting_both':
+        (page.sort.getOrderFor(propertyName).ascending?'sorting_asc':'sorting_desc')}">
+        <a th:href="@{${mainUrl}(page=${page.number},size=${page.size},sort=${propertyName}+','+
+            ${page.sort.getOrderFor(propertyName) eq null or page.sort.getOrderFor(propertyName).descending?'ASC':'DESC'})}">[[${label}]]</a>
+    </th>
+
+    <nav th:fragment="tableNav(mainUrl, page)" aria-label="..."
+         th:with="
+     currentPage='page='+${page.number},
+     currentSize='size='+${page.size},
+     currentSort='sort='+${#strings.replace(page.sort, ': ', ',')},
+     firstPageUrl=${mainUrl}+'?page=0&'+${currentSize}+'&'+${currentSort},
+     prevPageUrl=${mainUrl}+'?page='+${page.number - 1}+'&'+${currentSize}+'&'+${currentSort},
+     nextPageUrl=${mainUrl}+'?page='+${page.number + 1}+'&'+${currentSize}+'&'+${currentSort},
+     lastPageUrl=${mainUrl}+'?page='+${page.totalPages - 1}+'&'+${currentSize}+'&'+${currentSort}
+">
+        <ul class="pagination" style="float: left;" th:if="${page.totalPages gt 0}">
+
+            <li class="page-item" th:classappend="${page.first}?'disabled'">
+                <a class="page-link" th:href="${prevPageUrl}" tabindex="-1">&laquo;</a>
+            </li>
+            <li class="page-item" th:each="pageIdx:${#numbers.sequence(0, page.totalPages-1)}"
+                th:classappend="${pageIdx eq page.number}?'active'">
+                <a class="page-link"
+                   th:href="${mainUrl}+'?page='+${pageIdx}+'&'+${currentSize}+'&'+${currentSort}">
+                    [[${pageIdx+1}]]
+                    <span th:if="${pageIdx eq page.number}" class="sr-only"></span>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${page.last}?'disabled'">
+                <a class="page-link" th:href="${nextPageUrl}">&raquo;</a>
+            </li>
+        </ul>
+        <ul class="pagination" style="float: right" th:with="pageSizes=${ {20, 30, 50, 100} }">
+            <li class="page-item" th:each="size:${pageSizes}"
+                th:classappend="${page.size eq size}?'active'">
+                <a class="page-link"
+                   th:href="${mainUrl}+'?page=0&size='+${size}+'&'+${currentSort}">
+                    [[${size}]]
+                    <span th:if="${size eq page.size}" class="sr-only"></span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div th:fragment="footer">
+        <footer>
+            <div sec:authorize="isAuthenticated()">
+                <b>[[#{label.user.permissions}]]: </b>
+                <span th:each="role: ${#authentication.getAuthorities()}">
+                    <span style='font-weight: bold' th:classappend="${role}" th:text="${#strings.substring(role,5)}"/>
+                </span>
+            </div>
+            © 2020 Apteka - Projekt nr 3
+        </footer>
+    </div>
+</body>
+</html>

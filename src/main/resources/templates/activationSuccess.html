@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="shared/layout"
+      th:with="pageName='home', pageTitle='Zarejestrowano pomyślnie'">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div layout:fragment="custom-content">
+    Pomyślnie aktywowano konto. <br>
+    Username: [[${user.username}]] <br>
+    Email: [[${user.email}]] <br>
+    Możesz się teraz zalogować. <br>
+    <a class="nav-link" th:href="@{../drugs/add}">Zaloguj się</a><br>
+    <a href="drugs/list">Lista leków</a>
+</div>
+</body>
+</html>
