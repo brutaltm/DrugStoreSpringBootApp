@@ -23,7 +23,6 @@ import java.io.*;
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
-import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -204,12 +203,12 @@ public class OrderServiceImpl implements OrderService {
     public String fileToBase64String(String path) {
         byte[] bytes = null;
         try {
-        File file =  new File(path);
-        System.out.println(file.getAbsolutePath());
-        FileInputStream fileInputStreamReader = new FileInputStream(file);
-        bytes = new byte[(int)file.length()];
-        fileInputStreamReader.read(bytes);
-
+            File file =  new File(path);
+            System.out.println(file.getAbsolutePath());
+            FileInputStream fileInputStreamReader = new FileInputStream(file);
+            bytes = new byte[(int)file.length()];
+            fileInputStreamReader.read(bytes);
+            fileInputStreamReader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

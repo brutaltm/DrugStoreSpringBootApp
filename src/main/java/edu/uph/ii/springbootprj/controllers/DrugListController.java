@@ -36,14 +36,14 @@ public class DrugListController {
     @RequestMapping(value="/list", method = {RequestMethod.GET, RequestMethod.POST})
     public String showList(Model model,
                            @ModelAttribute("drugFilter") DrugFilter filter,
-                           @PageableDefault(sort = {"name", "id"}, size = 20)
+                           @PageableDefault(sort = {"name"}, size = 20)
                            Pageable pageable) throws OperationNotSupportedException {// page=x&size=y&sort=prop1,ASC&sort=prop2,DESC
 
         return drugService.showList(model,filter,pageable);
     }
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable long id, Model model, @ModelAttribute("drugFilter") DrugFilter filter,
-                         @PageableDefault(sort = {"name", "id"}, size = 20)
+                         @PageableDefault(sort = {"name"}, size = 20)
                          Pageable pageable) {
 
         return drugService.delete(id,model,filter,pageable);

@@ -51,8 +51,6 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
         registry.addResourceHandler("/zdjecia/**")//mapowanie
                 .addResourceLocations(String.format("file:%s/", photoDir));//fizyczna loka
         //Dodanie obsługi pozostałych zasobów
-        registry.addResourceHandler("/asd/**")//mapowanie
-                .addResourceLocations(String.format("file:%s/", "C:\\Users\\Bartus\\IdeaProjects\\lab8PP\\src\\main\\resources\\static"));
     }
 
 }

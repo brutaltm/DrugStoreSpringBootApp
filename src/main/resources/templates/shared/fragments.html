@@ -74,7 +74,7 @@
     </div>
     <th th:fragment="tableHeader(mainUrl, page, propertyName, label)" th:classappend="${page.sort.getOrderFor(propertyName) eq null ?'sorting_both':
         (page.sort.getOrderFor(propertyName).ascending?'sorting_asc':'sorting_desc')}">
-        <a th:href="@{${mainUrl}(page=${page.number},size=${page.size},sort=${propertyName}+','+
+        <a th:href="@{${mainUrl}(page=0,size=${page.size},sort=${propertyName}+','+
             ${page.sort.getOrderFor(propertyName) eq null or page.sort.getOrderFor(propertyName).descending?'ASC':'DESC'})}">[[${label}]]</a>
     </th>
 

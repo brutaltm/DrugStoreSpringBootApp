@@ -53,9 +53,9 @@ public class DrugFilter {
     }
 
     public enum QUERY_MODE {
+        QUERY,
         NAMED_METHOD,
         NAMED_QUERY,
-        QUERY,
         SpEL_AND_ENTITY_GRAPH,
         CRITERIA,
     }

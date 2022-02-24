@@ -73,9 +73,9 @@
         <label class="col-sm-2 col-form-label">[[#{label.lek.addPhoto}]]</label>
         <div class="col-sm-10">
             <div class="custom-file">
-                <input type="file" name="multipartFile" class="custom-file input" id="customFileLangHTML" accept=".gif,.png,.jpeg,.jpg">
-                <label class="custom-file-label" for="customFileLangHTML" data-browse="Wybierz..."></label>
-                <img th:if="${lek.photo != null}" th:src="'/zdjecia/drugs/' + *{id} + '/medium/' + *{photo.fileName}">
+                <input type="file" name="multipartFile" class="custom-file-input" id="customFileLangHTML" accept=".gif,.png,.jpeg,.jpg" onchange="{$('#customFileLangHTML').next().html($('#customFileLangHTML')[0].files[0].name)}">
+                <label class="custom-file-label" for="customFileLangHTML" data-browse="Wybierz...">Pliki graficzne</label>
+                <img th:if="${lek.id != null && lek.photo != null}" th:src="'/zdjecia/drugs/' + *{id} + '/medium/' + *{photo.fileName}">
             </div>
             <small style="color: red;" th:if="${#fields.hasErrors('photo')}" th:each="err : ${#fields.errors('photo')}" th:text="${err}"></small>
         </div>

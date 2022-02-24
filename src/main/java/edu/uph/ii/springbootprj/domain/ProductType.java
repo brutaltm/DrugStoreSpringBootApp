@@ -21,4 +21,16 @@ public class ProductType {
         this.id = id;
         this.name = name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+             return true;
+        if (obj == null)
+             return false;
+        ProductType df = (ProductType)obj;
+        if (df.id == this.id && df.name == this.name)
+            return true;
+        return false;
+    }
 }

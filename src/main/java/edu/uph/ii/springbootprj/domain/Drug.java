@@ -1,6 +1,7 @@
 package edu.uph.ii.springbootprj.domain;
 
 import edu.uph.ii.springbootprj.validators.IllegalManufacturerNames;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;

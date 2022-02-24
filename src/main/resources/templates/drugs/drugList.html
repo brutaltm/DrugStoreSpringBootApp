@@ -82,10 +82,10 @@
         <td th:text="*{productType.name}"></td>
         <td>
             <img th:if="${drug.photo != null}" th:src="'/zdjecia/drugs/' + *{id} + '/min/' + *{photo.fileName}">
-            <img th:unless="${drug.photo != null}" th:src="'/asd/Placeholder.png'" width='50' height='50'/>
+            <img th:unless="${drug.photo != null}" th:src="'/Placeholder.png'" width='50' height='50'/>
         </td>
         <td th:with="rating=${drug.getRating()}">
-            <img th:each="i : ${#numbers.sequence( 1, 5, 1)}" th:src="${( i <= rating ) ? '/asd/starY.png' : (( rating - i >= -0.5 ) ? '/asd/starH.png' : '/asd/starB.png')}" width='30' height='30' class="img-fluid"/>
+            <img th:each="i : ${#numbers.sequence( 1, 5, 1)}" th:src="${( i <= rating ) ? '/starY.png' : (( rating - i >= -0.5 ) ? '/starH.png' : '/starB.png')}" width='30' height='30' class="img-fluid"/>
         </td>
         <td sec:authorize="isAuthenticated()">
             <a sec:authorize="hasRole('USER')" th:href="@{details(id=*{id})}"><img th:src="@{../information.ico}" width='50' height='50' class="img-fluid"></a>

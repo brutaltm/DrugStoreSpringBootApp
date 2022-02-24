@@ -26,4 +26,15 @@ public class DrugForm {
         drugs = new HashSet<>();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+             return true;
+        if (obj == null)
+             return false;
+        DrugForm df = (DrugForm)obj;
+        if (df.id == this.id && df.name == this.name)
+            return true;
+        return false;
+    }
 }
