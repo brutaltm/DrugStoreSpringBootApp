@@ -60,7 +60,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .mvcMatchers("/webjars/**","/css/**","/public**","/pharmacy-512.webp","/","/drugs/list**","/register","saveUser","/zdjecia/**","/asd/**", "/activate", "/drugs/details**").permitAll()
+                .mvcMatchers("/webjars/**","/css/**","/public**","/**","/drugs/list**","/register","saveUser","/zdjecia/**","/asd/**", "/activate", "/drugs/details**").permitAll()
                 .mvcMatchers("/drugs/details**", "/account/**").hasRole("USER")
                 .mvcMatchers("/drugs/details**","/drugs/edit**","/drugs/add**","/drugs/delete**","/h2-console/**")
                 .access("hasRole('ADMIN')")
