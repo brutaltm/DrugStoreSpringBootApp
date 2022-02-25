@@ -1,9 +1,8 @@
 package edu.uph.ii.springbootprj.repositories;
 
-import edu.uph.ii.springbootprj.domain.Drug;
-import edu.uph.ii.springbootprj.domain.DrugForm;
-import edu.uph.ii.springbootprj.domain.ProductType;
-import edu.uph.ii.springbootprj.filters.DrugFilter;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -11,10 +10,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.persistence.NamedQuery;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Stream;
+import edu.uph.ii.springbootprj.domain.Drug;
+import edu.uph.ii.springbootprj.domain.DrugForm;
+import edu.uph.ii.springbootprj.domain.ProductType;
+import edu.uph.ii.springbootprj.filters.DrugFilter;
 
 public interface DrugRepository extends JpaRepository<Drug, Long>, JpaSpecificationExecutor<Drug> {
     Page<Drug> findDrugsByNameIgnoreCaseContainingOrManufacturerIgnoreCaseContaining(String phrase, String phrase2, Pageable pageable);

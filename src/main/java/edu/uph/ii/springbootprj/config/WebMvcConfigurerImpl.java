@@ -1,9 +1,10 @@
 package edu.uph.ii.springbootprj.config;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -12,8 +13,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
-import java.util.Locale;
 
 @Component
 @PropertySource("photoConfig.properties")

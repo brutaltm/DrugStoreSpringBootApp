@@ -1,17 +1,38 @@
 package edu.uph.ii.springbootprj.domain;
 
-import edu.uph.ii.springbootprj.validators.IllegalManufacturerNames;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import java.time.LocalDate;
-import java.util.*;
+import edu.uph.ii.springbootprj.validators.IllegalManufacturerNames;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "leki")

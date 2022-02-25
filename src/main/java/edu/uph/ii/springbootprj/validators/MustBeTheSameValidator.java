@@ -1,9 +1,9 @@
 package edu.uph.ii.springbootprj.validators;
 
-import edu.uph.ii.springbootprj.domain.Drug;
-import edu.uph.ii.springbootprj.domain.User;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
+import edu.uph.ii.springbootprj.domain.User;
 
 public class MustBeTheSameValidator implements Validator {
     @Override

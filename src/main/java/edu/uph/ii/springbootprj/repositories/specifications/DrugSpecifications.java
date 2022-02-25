@@ -1,13 +1,11 @@
 package edu.uph.ii.springbootprj.repositories.specifications;
 
-import edu.uph.ii.springbootprj.domain.Drug;
-import edu.uph.ii.springbootprj.domain.ProductType;
+import java.time.LocalDate;
+
 import org.springframework.data.jpa.domain.Specification;
 import org.thymeleaf.util.StringUtils;
 
-import java.awt.print.Book;
-import java.time.LocalDate;
-import java.util.List;
+import edu.uph.ii.springbootprj.domain.Drug;
 
 public class DrugSpecifications {
     public static Specification<Drug> findByPhrase(final String phrase) {

@@ -1,12 +1,11 @@
 package edu.uph.ii.springbootprj.controllers;
 
-import edu.uph.ii.springbootprj.domain.Drug;
-import edu.uph.ii.springbootprj.domain.Order;
-import edu.uph.ii.springbootprj.services.OrderService;
+import java.io.IOException;
+import java.security.Principal;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,11 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import java.io.IOException;
-import java.security.Principal;
+import edu.uph.ii.springbootprj.domain.Order;
+import edu.uph.ii.springbootprj.services.OrderService;
 
 @Controller
 public class OrderController {

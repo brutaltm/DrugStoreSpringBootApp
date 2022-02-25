@@ -1,13 +1,14 @@
 package edu.uph.ii.springbootprj.services;
 
+import java.io.IOException;
+import java.security.Principal;
+
 import com.lowagie.text.DocumentException;
-import edu.uph.ii.springbootprj.domain.Order;
-import edu.uph.ii.springbootprj.domain.User;
+
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import java.io.IOException;
-import java.security.Principal;
+import edu.uph.ii.springbootprj.domain.Order;
 
 public interface OrderService {
     String parseThymeleafTemplate(Order o);

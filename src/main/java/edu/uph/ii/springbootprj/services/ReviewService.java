@@ -1,13 +1,11 @@
 package edu.uph.ii.springbootprj.services;
 
-import edu.uph.ii.springbootprj.domain.Review;
-import edu.uph.ii.springbootprj.domain.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import java.security.Principal;
+
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import javax.mail.MessagingException;
-import java.security.Principal;
+import edu.uph.ii.springbootprj.domain.Review;
 
 public interface ReviewService {
     String processForm(Model model, Review review, Principal p, BindingResult result);

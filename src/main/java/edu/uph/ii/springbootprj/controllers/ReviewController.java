@@ -1,23 +1,19 @@
 package edu.uph.ii.springbootprj.controllers;
 
-import edu.uph.ii.springbootprj.domain.Drug;
-import edu.uph.ii.springbootprj.domain.DrugForm;
-import edu.uph.ii.springbootprj.domain.ProductType;
-import edu.uph.ii.springbootprj.domain.Review;
-import edu.uph.ii.springbootprj.services.ReviewService;
-import edu.uph.ii.springbootprj.services.impl.DrugService;
+import java.io.IOException;
+import java.security.Principal;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
+import edu.uph.ii.springbootprj.domain.Review;
+import edu.uph.ii.springbootprj.services.ReviewService;
 
 @Controller
 @RequestMapping("/review")

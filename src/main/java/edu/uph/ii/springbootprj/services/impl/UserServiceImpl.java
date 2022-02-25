@@ -1,16 +1,13 @@
 package edu.uph.ii.springbootprj.services.impl;
 
-import edu.uph.ii.springbootprj.config.ProfileNames;
-import edu.uph.ii.springbootprj.domain.Role;
-import edu.uph.ii.springbootprj.domain.User;
-import edu.uph.ii.springbootprj.repositories.OrderRepository;
-import edu.uph.ii.springbootprj.repositories.RoleRepository;
-import edu.uph.ii.springbootprj.repositories.UserRepository;
-import edu.uph.ii.springbootprj.services.EmailService;
-import edu.uph.ii.springbootprj.services.UserService;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,11 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import javax.mail.MessagingException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import edu.uph.ii.springbootprj.config.ProfileNames;
+import edu.uph.ii.springbootprj.domain.Role;
+import edu.uph.ii.springbootprj.domain.User;
+import edu.uph.ii.springbootprj.repositories.OrderRepository;
+import edu.uph.ii.springbootprj.repositories.RoleRepository;
+import edu.uph.ii.springbootprj.repositories.UserRepository;
+import edu.uph.ii.springbootprj.services.EmailService;
+import edu.uph.ii.springbootprj.services.UserService;
 
 @Service
 @Profile(ProfileNames.USERS_IN_DATABASE)

@@ -1,25 +1,27 @@
 package edu.uph.ii.springbootprj.controllers;
 
-import edu.uph.ii.springbootprj.domain.Drug;
+import java.util.Optional;
+
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import edu.uph.ii.springbootprj.domain.User;
 import edu.uph.ii.springbootprj.exceptions.UserNotFoundOrAlreadyActivatedException;
 import edu.uph.ii.springbootprj.repositories.UserRepository;
 import edu.uph.ii.springbootprj.services.UserService;
 import edu.uph.ii.springbootprj.validators.MustBeTheSameValidator;
-import edu.uph.ii.springbootprj.validators.TheSameValidator;
 import edu.uph.ii.springbootprj.validators.UsernameExistsValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 public class UserController {

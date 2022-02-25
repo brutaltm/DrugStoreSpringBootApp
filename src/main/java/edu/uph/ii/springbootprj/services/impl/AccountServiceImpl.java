@@ -1,21 +1,21 @@
 package edu.uph.ii.springbootprj.services.impl;
 
-import edu.uph.ii.springbootprj.domain.Order;
-import edu.uph.ii.springbootprj.domain.User;
-import edu.uph.ii.springbootprj.repositories.OrderRepository;
-import edu.uph.ii.springbootprj.repositories.UserRepository;
-import edu.uph.ii.springbootprj.services.AccountService;
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.security.Principal;
+import edu.uph.ii.springbootprj.domain.Order;
+import edu.uph.ii.springbootprj.domain.User;
+import edu.uph.ii.springbootprj.repositories.OrderRepository;
+import edu.uph.ii.springbootprj.repositories.UserRepository;
+import edu.uph.ii.springbootprj.services.AccountService;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -28,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String showList(Model model, Principal principal, Order.Status status, Pageable pageable) {
         System.out.println(model.getAttribute("user"));
-        Page page = orderRepository.findAllByUserAndStatus(userRepository.findUserByUsername(principal.getName()), status, pageable);
+        var page = orderRepository.findAllByUserAndStatus(userRepository.findUserByUsername(principal.getName()), status, pageable);
         //Page page = orderRepository.findAll(pageable);
 
         model.addAttribute("page", page);
@@ -38,7 +38,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String showList(Model model, Principal principal, Order.Status status, Order.Status status2, Pageable pageable) {
         System.out.println(model.getAttribute("user"));
-        Page page = orderRepository.findAllByUserAndStatusOrUserAndStatus(userRepository.findUserByUsername(principal.getName()), status, userRepository.findUserByUsername(principal.getName()), status2, pageable);
+        var page = orderRepository.findAllByUserAndStatusOrUserAndStatus(userRepository.findUserByUsername(principal.getName()), status, userRepository.findUserByUsername(principal.getName()), status2, pageable);
         //Page page = orderRepository.findAll(pageable);
 
         model.addAttribute("page", page);

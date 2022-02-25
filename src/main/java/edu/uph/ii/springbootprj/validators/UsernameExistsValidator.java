@@ -1,12 +1,10 @@
 package edu.uph.ii.springbootprj.validators;
 
-import edu.uph.ii.springbootprj.domain.User;
-import edu.uph.ii.springbootprj.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.persistence.Transient;
+import edu.uph.ii.springbootprj.domain.User;
+import edu.uph.ii.springbootprj.repositories.UserRepository;
 
 public class UsernameExistsValidator implements Validator {
     UserRepository userRepository;

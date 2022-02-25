@@ -95,7 +95,7 @@ public class DrugService {
         var a = new Review();
         a.setDrug(lek);
         model.addAttribute("review", a);
-        Page page = reviewRepository.findAllByDrug(lek, pageable);
+        var page = reviewRepository.findAllByDrug(lek, pageable);
         model.addAttribute("page", page);
         System.out.println("ID: " + id);
         return "drugs/drugDetails";
@@ -109,7 +109,7 @@ public class DrugService {
                            DrugFilter filter,
                            Pageable pageable) throws OperationNotSupportedException {// page=x&size=y&sort=prop1,ASC&sort=prop2,DESC
 
-        Page page = null;
+        Page<Drug> page = null;
 
         if (filter.isEmpty())
             page = drugRepository.findAll(pageable);

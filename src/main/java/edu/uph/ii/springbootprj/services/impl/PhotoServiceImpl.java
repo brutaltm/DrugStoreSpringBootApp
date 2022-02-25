@@ -1,17 +1,18 @@
 package edu.uph.ii.springbootprj.services.impl;
 
-import edu.uph.ii.springbootprj.services.PhotoService;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Path;
+
+import javax.imageio.ImageIO;
+
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Path;
+import edu.uph.ii.springbootprj.services.PhotoService;
 
 @Service
 public class PhotoServiceImpl implements PhotoService {

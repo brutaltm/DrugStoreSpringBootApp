@@ -1,15 +1,16 @@
 package edu.uph.ii.springbootprj.services.impl;
 
-import edu.uph.ii.springbootprj.services.EmailService;
+import java.io.File;
+
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.SendFailedException;
-import java.io.File;
+import edu.uph.ii.springbootprj.services.EmailService;
 
 @Service
 public class EmailServiceImpl implements EmailService {

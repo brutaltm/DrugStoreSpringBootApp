@@ -1,16 +1,21 @@
 package edu.uph.ii.springbootprj.domain;
 
-import edu.uph.ii.springbootprj.repositories.UserRepository;
-import lombok.AllArgsConstructor;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Size;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.aspectj.weaver.ast.Or;
-import org.hibernate.mapping.FetchProfile;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
