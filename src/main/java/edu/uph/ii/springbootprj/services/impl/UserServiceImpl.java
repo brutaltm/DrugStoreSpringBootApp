@@ -105,8 +105,9 @@ public class UserServiceImpl implements UserService {
     private String createActivationCodeMessage(String code, String siteURL) {
         var thymeleafCtx = new Context();
         String verifyURL = siteURL + "/activate?code=" + code;
-        thymeleafCtx.setVariable("header", "To nagłówek");
-        thymeleafCtx.setVariable("title", "Aktywacja konta");
+        
+        thymeleafCtx.setVariable("header", "Aktywuj swoje konto");
+        thymeleafCtx.setVariable("title", "Aktywacja konta w serwisie");
         thymeleafCtx.setVariable("description", "Kliknij w link aby aktywować swoje konto: ");
         thymeleafCtx.setVariable("link",verifyURL);
 
