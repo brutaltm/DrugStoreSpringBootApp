@@ -3,7 +3,7 @@ Java SpringBoot Hibernate Drug Store Web App with generating PDF Invoice From HT
 Project for my IT studies - subject: Programming Platforms (Java, MVC, Spring, Hibernate).
 
  ### App deployed on Heroku:
- https://springdrugstore.herokuapp.com/ (site might take more than 30 seconds to laod for the first time)
+ https://springdrugstore.herokuapp.com/ (site might take more than 30 seconds to load for the first time)
  1. Log in as user:\
   Login: `user`\
   Password: `user`\
