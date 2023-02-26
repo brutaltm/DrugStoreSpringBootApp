@@ -21,7 +21,7 @@ public class EmailServiceImpl implements EmailService {
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-        emailSender.send(message);
+        //emailSender.send(message);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class EmailServiceImpl implements EmailService {
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(text, true); //czy HTML
-        emailSender.send(mimeMessage);
+        //emailSender.send(mimeMessage);
 
     }
 
@@ -42,7 +42,7 @@ public class EmailServiceImpl implements EmailService {
         helper.setSubject(subject);
         helper.setText(text, true); //czy HTML
         helper.addAttachment(file.getName(), file);
-        emailSender.send(mimeMessage);
+        //emailSender.send(mimeMessage);
 
     }
 

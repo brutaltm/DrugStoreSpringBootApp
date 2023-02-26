@@ -59,7 +59,7 @@
                 </thead>
                 <tr th:each="orderedProduct, stats :${order.zamowione_produkty}">
                     <td th:text="${orderedProduct.drug.id}"></td>
-                    <td><a th:text="${orderedProduct.drug.name}" th:href="@{../drugs/details(id=${orderedProduct.drug.id})}" /></td>
+                    <td><a th:text="${orderedProduct.drug.name}" th:href="@{/drugs/details(id=${orderedProduct.drug.id})}" /></td>
                     <td th:id="'price' + ${stats.index}" th:text="${#numbers.formatDecimal(orderedProduct.drug.price, 1, 'DEFAULT', 2, 'DEFAULT')} + ' PLN'"></td>
                     <td><input th:id="'in' + ${stats.index}" type="number" min=1 th:field="*{zamowione_produkty[__${stats.index}__].amount}" th:onchange="'zmiana(' + ${stats.index} + ', ' + ${orderedProduct.drug.price} + ', ' + this.value + ');'"/></td>
                     <td><span class="sum_item" th:id="'span' + ${stats.index}" th:text="${#numbers.formatDecimal(orderedProduct.drug.price * orderedProduct.amount, 1, 'DEFAULT', 2, 'DEFAULT')}"></span> PLN</td>

@@ -30,7 +30,7 @@
                 </thead>
                 <tr  th:each="orderedProduct, stats :${order.zamowione_produkty}">
                     <td th:text="${orderedProduct.drug.id}"></td>
-                    <td> <a th:text="${orderedProduct.drug.name}" th:href="@{../drugs/details(id=*{id})}"/></td>
+                    <td> <a th:text="${orderedProduct.drug.name}" th:href="@{/drugs/details(id=*{id})}"/></td>
                     <td th:text="${#numbers.formatDecimal(orderedProduct.drug.price, 1, 'DEFAULT', 2, 'DEFAULT')} + ' PLN'"></td>
                     <td th:text="'x ' + ${orderedProduct.amount}"></td>
                     <td th:with="fullPrice=${orderedProduct.drug.price * orderedProduct.amount}" th:text="${#numbers.formatDecimal(fullPrice, 0, 'DEFAULT', 2, 'DEFAULT')} + ' PLN'"></td>
@@ -40,7 +40,7 @@
                     <th></th><th></th><th></th>
                     <th>
                         <a th:if="${!order.isOplacony()}" class="btn btn-danger" th:href="@{orders/cancel(id=*{id})}">[[#{label.menu.cancel}]]</a>
-                        <a th:if="${order.isOplacony()}" class="btn btn-info" th:href="'/zdjecia/' + *{user.id} + '/Invoices/FV' + ${#temporals.format(order.orderedAt, 'YYMMdd')} + '-' + *{id} + '.pdf'">[[#{label.order.downloadInvoice}]]</a>
+                        <a th:if="${order.isOplacony()}" class="btn btn-info" th:href="@{/} + 'zdjecia/' + *{user.id} + '/Invoices/FV' + ${#temporals.format(order.orderedAt, 'YYMMdd')} + '-' + *{id} + '.pdf'">[[#{label.order.downloadInvoice}]]</a>
                     </th>
                     <th> <span th:text="${#numbers.formatDecimal(order.totalPrice, 1, 'DEFAULT', 2, 'DEFAULT')} + ' PLN'"/> <a class="btn btn-warning" style="float: right;" th:if="${!order.isOplacony()}" th:href="@{orders/pay(id=*{id})}">[[#{label.order.pay}]]</a></th>
                 </tr>

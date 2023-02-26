@@ -109,10 +109,12 @@ public class DrugRepositoryInitializer {
                 User admin = new User("admin", true);
                 admin.setRoles(new HashSet<>(Arrays.asList(roleAdmin)));
                 admin.setPassword(passwordEncoder.encode("admin"));
+                admin.setEmail("testjd@o2.pl");
 
                 User test = new User("superuser", true);
                 test.setRoles(new HashSet<>(Arrays.asList(roleAdmin, roleUser)));
                 test.setPassword(passwordEncoder.encode("super"));
+                test.setEmail("testjd@o2.pl");
 
                 userRepository.save(user);
                 userRepository.save(user2);

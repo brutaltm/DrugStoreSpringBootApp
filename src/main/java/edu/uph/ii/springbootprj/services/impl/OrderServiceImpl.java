@@ -51,12 +51,12 @@ public class OrderServiceImpl implements OrderService {
         //}
         User u = userRepository.findUserByUsername(p.getName());
         if (!u.dataFilled())
-            return "redirect:../account/data";
+            return "redirect:/account/data";
         order.setStatus(Order.Status.NIEOPLACONY);
         orderRepository.save(order);
         for (var op : order.getZamowione_produkty())
             orderedProductRepository.save(op);
-        return "redirect:../account/orders";
+        return "redirect:/account/orders";
     }
 
     @Override
@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
         orderedProductRepository.deleteById(id);
         o.updatePrice();
         orderRepository.save(o);
-        return "redirect:../cart";
+        return "redirect:/cart";
     }
 
     @Override
@@ -94,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.save(koszyk);
         }
 
-        return "redirect:../../cart";
+        return "redirect:/cart";
     }
 
     @Override
@@ -112,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
         o.setStatus(Order.Status.KOSZYK);
         orderRepository.save(o);
 
-        return "redirect:../../cart";
+        return "redirect:/cart";
     }
 
     public String parseThymeleafTemplate(Order o) {
@@ -186,7 +186,7 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
         }
 
-        return "redirect:../orders";
+        return "redirect:/account/orders";
     }
 
     private String createInvoiceMessage(Order o) {

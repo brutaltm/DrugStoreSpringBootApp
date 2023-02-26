@@ -17,7 +17,7 @@
     </div>
     <div th:fragment="menu(pageName)">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="/"><img th:src="@{../pharmacy-512.webp}" width='50' height='50' class="img-fluid"> [[#{label.menu.companyName}]] </a>
+            <a class="navbar-brand" href="/"><img th:src="@{/pharmacy-512.webp}" width='50' height='50' class="img-fluid"> [[#{label.menu.companyName}]] </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,10 +28,10 @@
                         <a class="nav-link" th:href="@{/}">[[#{label.menu.homePage}]]</a>
                     </li>
                     <li class="nav-item" th:classappend="${pageName eq 'drugList'}?'active'">
-                        <a class="nav-link" th:href="@{../drugs/list}">[[#{label.menu.druglist}]]</a>
+                        <a class="nav-link" th:href="@{/drugs/list}">[[#{label.menu.druglist}]]</a>
                     </li>
                     <li sec:authorize="hasRole('ADMIN')" class="nav-item" th:classappend="${pageName eq 'drugForm'}?'active'">
-                        <a class="nav-link" th:href="@{../drugs/add}">[[#{label.menu.new}]]</a>
+                        <a class="nav-link" th:href="@{/drugs/add}">[[#{label.menu.new}]]</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav my-2 my-lg-0">
@@ -48,10 +48,10 @@
                         </div>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item" th:classappend="${pageName eq 'loginForm'}?'active'">
-                        <a class="nav-link" th:href="@{../cart}">[[#{label.menu.cart}]]</a>
+                        <a class="nav-link" th:href="@{/cart}">[[#{label.menu.cart}]]</a>
                     </li>
                     <li sec:authorize="isAnonymous()" class="nav-item" th:classappend="${pageName eq 'loginForm'}?'active'">
-                        <a class="nav-link" th:href="@{../login}">[[#{label.menu.login}]]</a>
+                        <a class="nav-link" th:href="@{/login}">[[#{label.menu.login}]]</a>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item nav-link active">[[#{label.menu.welcome}]] <span sec:authentication="principal.username" th:classappend="${#authentication.getAuthorities()[0]}"/>!</li>
                     <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
@@ -59,8 +59,8 @@
                             [[#{label.menu.account}]]
                         </a>
                         <div class="dropdown-menu" aria-labelledby="konto">
-                            <a class="dropdown-item" th:href="@{../account/data}">[[#{label.menu.yourdata}]]</a>
-                            <a class="dropdown-item" th:href="@{../account/orders}">[[#{label.menu.orders}]]</a>
+                            <a class="dropdown-item" th:href="@{/account/data}">[[#{label.menu.yourdata}]]</a>
+                            <a class="dropdown-item" th:href="@{/account/orders}">[[#{label.menu.orders}]]</a>
                         </div>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item" th:classappend="${pageName eq 'logout'}?'active'">

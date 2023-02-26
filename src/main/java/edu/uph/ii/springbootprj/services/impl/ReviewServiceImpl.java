@@ -31,6 +31,6 @@ public class ReviewServiceImpl implements ReviewService {
         d.updateRating(review.getRating());
         drugRepository.save(d);
         reviewRepository.save(review);
-        return "redirect:../drugs/details?id=" + review.getDrug().getId();
+        return "redirect:/drugs/details?id=" + review.getDrug().getId();
     }
 }

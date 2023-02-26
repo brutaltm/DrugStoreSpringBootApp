@@ -21,12 +21,12 @@
     <tr><th th:text="#{label.lek.productType}"></th><td>[[${lek.productType.name}]]</td></tr>
     <tr>
         <th th:text="#{label.lek.photo}"></th></th>
-        <th><img th:if="${lek.photo != null && lek.photo.fileName != null}" th:src="'/zdjecia/drugs/' + *{lek.id} + '/large/' + *{lek.photo.fileName}"/>
-            <img th:unless="${lek.photo != null}" th:src="'/Placeholder.png'" width='300' height='300'/><br>
-    <a th:if="${lek.photo != null && lek.photo.fileName != null}" th:href="'/zdjecia/drugs/' + *{lek.id} + '/' + *{lek.photo.fileName}"> [[#{label.photo.viewOriginal}]] </a></th></tr>
+        <th><img th:if="${lek.photo != null && lek.photo.fileName != null}" th:src="@{/} + 'zdjecia/drugs/' + *{lek.id} + '/large/' + *{lek.photo.fileName}"/>
+            <img th:unless="${lek.photo != null}" th:src="@{/Placeholder.png}" width='300' height='300'/><br>
+    <a th:if="${lek.photo != null && lek.photo.fileName != null}" th:href="@{/} + 'zdjecia/drugs/' + *{lek.id} + '/' + *{lek.photo.fileName}"> [[#{label.photo.viewOriginal}]] </a></th></tr>
 
 </table>
-    <form th:method="POST" th:object="${review}" th:action="@{../review/save}">
+    <form th:method="POST" th:object="${review}" th:action="@{./review/save}">
         <div class="table-responsive">
             <table>
                 <input type="hidden" th:field="*{drug.id}"/>
@@ -38,14 +38,14 @@
     </form>
     <table style="width: 50%; text-align: center">
         <tr>
-        <tr><td><img th:each="i : ${#numbers.sequence( 1, 5, 1)}" th:src="${( i <= lek.rating ) ? '/starY.png' : (( lek.rating - i >= -0.5 ) ? '/starH.png' : '/starB.png')}" width='30' height='30' class="img-fluid"/></td></tr>
+        <tr><td><img th:each="i : ${#numbers.sequence( 1, 5, 1)}" th:src="@{${( i <= lek.rating ) ? '/starY.png' : (( lek.rating - i >= -0.5 ) ? '/starH.png' : '/starB.png')}}" width='30' height='30' class="img-fluid"/></td></tr>
         <tr><td><span style="font-size: 35px;" th:text="${#numbers.formatDecimal(lek.getRating(), 1,2,'COMMA')}"></span></td></tr>
         </tr>
     </table>
     <table class="table table-bordered" style="max-width: 50%;" th:each="rev:${page.content}">
         <tr>
             <td style="min-width: 180px;" th:text="${rev.user.username} + ': '"></td>
-            <td style="min-width: 180px;max-width: 200px;"><img th:each="i : ${#numbers.sequence( 1, 5, 1)}" th:src="${( i <= rev.rating ) ? '/starY.png' : (( rev.rating - i >= -0.5 ) ? '/starH.png' : '/starB.png')}" width='30' height='30' class="img-fluid"/></td>
+            <td style="min-width: 180px;max-width: 200px;"><img th:each="i : ${#numbers.sequence( 1, 5, 1)}" th:src="@{${( i <= rev.rating ) ? '/starY.png' : (( rev.rating - i >= -0.5 ) ? '/starH.png' : '/starB.png')}}" width='30' height='30' class="img-fluid"/></td>
             <td style="min-width: 150px;max-width: 200px;" th:text="${#temporals.format(rev.createdAt, 'dd.MM.yyyy HH:mm')}"></td>
 
         </tr>
@@ -54,7 +54,7 @@
         </tr>
     </table>
     <h3 th:if="${#lists.isEmpty(page.content)}" th:text="#{label.review.nothing}"></h3>
-    <a class="btn btn-secondary" th:href="@{../drugs/list}">[[#{label.menu.return}]]</a>
+    <a class="btn btn-secondary" th:href="@{/drugs/list}">[[#{label.menu.return}]]</a>
 </div>
 </body>
 </html>

@@ -2,16 +2,16 @@
 Java SpringBoot Hibernate Drug Store Web App with generating PDF Invoice From HTML Template.\
 Project for my IT studies - subject: Programming Platforms (Java, MVC, Spring, Hibernate).
 
- ### App deployed on Heroku:
- https://springdrugstore.herokuapp.com/ (site might take more than 30 seconds to load for the first time)
+ ### App deployed on VM:
+ http://138.2.171.185/drugStore/ (free tier Oracle VM)
  1. Log in as user:\
   Login: `user`\
   Password: `user`\
   Or as superuser:\
   Login: `superuser`\
   Password: `super`\
-  Or create new account (email verification needed).
-  2. Add item to cart -> Confirm -> (if personal data not present) Enter random personal info, and go back to cart -> Pay button generates PDF Invoice from template and sends it via email
+  ~~Or create new account (email verification needed)~~.
+  2. Add item to cart -> Confirm -> (if personal data not present) Enter random personal info, and go back to cart -> Pay button generates PDF Invoice from template ~~and sends it via email~~
 
 ### Built With
 * [Spring Boot](https://spring.io/projects/spring-boot)

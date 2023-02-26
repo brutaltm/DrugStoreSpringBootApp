@@ -73,7 +73,7 @@ public class DrugService {
             photoService.saveFileWithResizing(String.format("drugs/%d",drug.getId()), multipartFile);
         }
         drugRepository.save(drug);
-        return "redirect:../drugs/details?id=" + drug.getId();
+        return "redirect:/drugs/details?id=" + drug.getId();
     }
 
     public void InitBinder(WebDataBinder binder) {
@@ -169,7 +169,7 @@ public class DrugService {
     @Secured("ROLE_ADMIN")
     public String delete(long id, Model model,DrugFilter filter, Pageable pageable) {
         drugRepository.deleteById(id);
-        return "redirect:../list";
+        return "redirect:./list";
     }
 
     public String clearFilter(DrugFilter filter) {

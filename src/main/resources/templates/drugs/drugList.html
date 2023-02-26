@@ -81,17 +81,17 @@
         <td th:if="*{discount == False}" th:text="*{#numbers.formatDecimal(price, 2,2,'COMMA')}"></td>
         <td th:text="*{productType.name}"></td>
         <td>
-            <img th:if="${drug.photo != null}" th:src="'/zdjecia/drugs/' + *{id} + '/min/' + *{photo.fileName}">
-            <img th:unless="${drug.photo != null}" th:src="'/Placeholder.png'" width='50' height='50'/>
+            <img th:if="${drug.photo != null}" th:src="@{/} + 'zdjecia/drugs/' + *{id} + '/min/' + *{photo.fileName}">
+            <img th:unless="${drug.photo != null}" th:src="@{/} + 'Placeholder.png'" width='50' height='50'/>
         </td>
         <td th:with="rating=${drug.getRating()}">
-            <img th:each="i : ${#numbers.sequence( 1, 5, 1)}" th:src="${( i <= rating ) ? '/starY.png' : (( rating - i >= -0.5 ) ? '/starH.png' : '/starB.png')}" width='30' height='30' class="img-fluid"/>
+            <img th:each="i : ${#numbers.sequence( 1, 5, 1)}" th:src="@{${( i <= rating ) ? '/starY.png' : (( rating - i >= -0.5 ) ? '/starH.png' : '/starB.png')}}" width='30' height='30' class="img-fluid"/>
         </td>
         <td sec:authorize="isAuthenticated()">
-            <a sec:authorize="hasRole('USER')" th:href="@{details(id=*{id})}"><img th:src="@{../information.ico}" width='50' height='50' class="img-fluid"></a>
+            <a sec:authorize="hasRole('USER')" th:href="@{details(id=*{id})}"><img th:src="@{/information.ico}" width='50' height='50' class="img-fluid"></a>
             <a sec:authorize="hasRole('ADMIN')" class="btn btn-success" th:href="@{edit(id=*{id})}">[[#{label.lek.edit}]]</a>
             <a sec:authorize="hasRole('ADMIN')" class="btn btn-danger" th:href="@{delete/{did}(did=*{id})}">[[#{label.lek.delete}]]</a>
-            <a sec:authorize="hasRole('USER')" th:href="@{../cart/add/{did}(did=*{id})}"><img th:src="@{../cart.png}" width='50' height='50' class="img-fluid"></a>
+            <a sec:authorize="hasRole('USER')" th:href="@{/cart/add/{did}(did=*{id})}"><img th:src="@{/cart.png}" width='50' height='50' class="img-fluid"></a>
         </td>
 
     </tr>
